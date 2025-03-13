@@ -1,8 +1,8 @@
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 shadow-sm px-8">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <a className="btn btn-ghost text-xl">SwipeMate</a>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">

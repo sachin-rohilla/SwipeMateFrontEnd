@@ -151,13 +151,22 @@ const SignUp = () => {
 
               {/* Gender */}
               <div className="flex flex-col gap-2 col-span-full sm:col-span-1">
-                <label className="input flex border border-base-300 items-center gap-2">
-                  <select
+                <label className=" flex  items-center gap-2">
+                  {/* <select
                     name="gender"
+                    defaultValue={"Gender"}
                     value={values.gender}
                     onChange={(e) => setFieldValue("gender", e.target.value)}
-                    className="p-2 rounded w-full mt-1"
+                    className="p-2 select rounded w-full border-none mt-1"
+                  ></select> */}
+
+                  <select
+                    defaultValue="male"
+                    className="select w-full border border-base-300"
+                    value={values.gender}
+                    onChange={(e) => setFieldValue("gender", e.target.value)}
                   >
+                    <option disabled={true}>Gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>

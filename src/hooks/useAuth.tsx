@@ -58,7 +58,7 @@ const useAuth = () => {
       toast.success(data?.message || " Sign Up Successfully");
       navigate("/login");
     } catch (error: any) {
-      console.error("SignUp error:", error.message || "Something went wrong");
+      console.log("SignUp error:", error.message || "Something went wrong");
       toast.error(error?.message || "Something went wrong");
     } finally {
       setIsLoading(false);

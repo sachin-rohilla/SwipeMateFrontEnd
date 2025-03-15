@@ -9,6 +9,9 @@ const Login = () => {
     password: "",
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
 
   const { loginApi, isLoading } = useAuth();
 
@@ -16,7 +19,7 @@ const Login = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -24,9 +27,32 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const validate = () => {
+    const newErrors: { email?: string; password?: string } = {};
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+    if (!formData.email || !emailPattern.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+    if (!formData.password || !passwordPattern.test(formData.password)) {
+      newErrors.password =
+        "Password must be at least 8 characters, including at least one number, one lowercase letter, and one uppercase letter.";
+    }
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    loginApi(formData);
+
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length === 0) {
+      loginApi(formData);
+    } else {
+      setErrors(validationErrors);
+    }
   };
 
   return (
@@ -48,7 +74,7 @@ const Login = () => {
         >
           <div className="text-center mb-4">
             <h1 className="text-3xl font-semibold text-primary">Sign In</h1>
-            <p className=" mt-2 font-modern">
+            <p className="mt-2 font-modern">
               Our Story Awaits… Let’s Make It Real 💑
             </p>
           </div>
@@ -60,15 +86,14 @@ const Login = () => {
               name="email"
               type="email"
               placeholder="mail@site.com"
-              required
-              value={formData?.email}
+              value={formData.email}
               onChange={handleChange}
-              className=" p-2 rounded w-full mt-1"
+              className="p-2 rounded w-full mt-1"
             />
           </label>
-          <div className="validator-hint hidden text-red-500">
-            Enter valid email address
-          </div>
+          {errors.email && (
+            <div className="text-red-500 text-sm mt-1">{errors.email}</div>
+          )}
 
           {/* Password Input */}
           <label className="input border border-base-300 flex items-center gap-2 mt-4">
@@ -76,14 +101,10 @@ const Login = () => {
             <input
               name="password"
               type={passwordVisible ? "text" : "password"}
-              required
-              placeholder="Password"
-              value={formData?.password}
+              value={formData.password}
               onChange={handleChange}
-              minLength={8}
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-              className=" p-2 rounded  w-full mt-1"
+              placeholder="Password"
+              className="p-2 rounded w-full mt-1"
             />
             <button
               type="button"
@@ -97,15 +118,9 @@ const Login = () => {
               )}
             </button>
           </label>
-          <p className="validator-hint hidden text-red-500">
-            Must be more than 8 characters, including
-            <br />
-            At least one number
-            <br />
-            At least one lowercase letter
-            <br />
-            At least one uppercase letter
-          </p>
+          {errors.password && (
+            <div className="text-red-500 text-sm mt-1">{errors.password}</div>
+          )}
 
           {/* Submit Button */}
           <div className="text-center mt-6">

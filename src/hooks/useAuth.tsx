@@ -37,6 +37,34 @@ const useAuth = () => {
     }
   };
 
+  const signUpApi = async (payload: any) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/api/signUp`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+        credentials: "include",
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        const errorMessage =
+          data?.message || response.statusText || "An unknown error occurred.";
+        throw new Error(` ${errorMessage}`);
+      }
+      toast.success(data?.message || " Sign Up Successfully");
+      navigate("/login");
+    } catch (error: any) {
+      console.error("SignUp error:", error.message || "Something went wrong");
+      toast.error(error?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return { loginApi, isLoading };
 };
 

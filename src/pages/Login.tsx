@@ -1,12 +1,32 @@
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const { loginApi, isLoading } = useAuth();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginApi(formData);
   };
 
   return (
@@ -22,7 +42,10 @@ const Login = () => {
         </div>
 
         {/* Right Form Section */}
-        <form className="flex flex-col gap-6 p-6 w-full sm:w-96 md:w-1/2">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-6 p-6 w-full sm:w-96 md:w-1/2"
+        >
           <div className="text-center mb-4">
             <h1 className="text-3xl font-semibold text-primary">Sign In</h1>
             <p className=" mt-2 font-modern">
@@ -34,9 +57,12 @@ const Login = () => {
           <label className="input flex border border-base-300 items-center gap-2">
             <Mail className="h-5 w-5 opacity-50" />
             <input
+              name="email"
               type="email"
               placeholder="mail@site.com"
               required
+              value={formData?.email}
+              onChange={handleChange}
               className=" p-2 rounded w-full mt-1"
             />
           </label>
@@ -48,13 +74,16 @@ const Login = () => {
           <label className="input border border-base-300 flex items-center gap-2 mt-4">
             <Lock className="h-5 w-5 opacity-50" />
             <input
+              name="password"
               type={passwordVisible ? "text" : "password"}
               required
               placeholder="Password"
+              value={formData?.password}
+              onChange={handleChange}
               minLength={8}
               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
               title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
-              className=" p-2 rounded w-full mt-1"
+              className=" p-2 rounded  w-full mt-1"
             />
             <button
               type="button"

@@ -2,6 +2,7 @@ import { Route, Router, Routes } from "react-router-dom";
 import "./App.css";
 import { lazy, Suspense } from "react";
 import Layout from "./Layout/Layout";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const Home = lazy(() => import("./pages/Home"));
@@ -20,6 +21,7 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
+      <Toaster />
     </>
   );
 }

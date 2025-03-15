@@ -5,8 +5,8 @@ interface User {
   email: string;
 }
 interface AppContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
+  userData: User | null;
+  setUserData: (userData: User | null) => void;
 }
 
 interface AppContextProviderProps {
@@ -14,15 +14,15 @@ interface AppContextProviderProps {
 }
 
 export const AppContext = createContext<AppContextType>({
-  user: null,
-  setUser: () => {},
+  userData: null,
+  setUserData: () => {},
 });
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [userData, setUserData] = useState<User | null>(null);
 
   return (
-    <AppContext.Provider value={{ user, setUser }}>
+    <AppContext.Provider value={{ userData, setUserData }}>
       {children}
     </AppContext.Provider>
   );

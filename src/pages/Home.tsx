@@ -1,9 +1,7 @@
-import { Login } from "./Login";
-
 const Home = () => {
   return (
     <div>
-      <Login />
+      <h1>Home</h1>
     </div>
   );
 };

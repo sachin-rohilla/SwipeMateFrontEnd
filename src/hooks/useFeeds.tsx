@@ -1,9 +1,11 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { API_URL } from "../constants/constants";
+import { useAppContext } from "../context/AppContext";
 
 const useFeeds = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { setFeedsData } = useAppContext();
   const getFeedsApi = async () => {
     try {
       setIsLoading(true);
@@ -20,7 +22,7 @@ const useFeeds = () => {
           data?.message || response.statusText || "An unknown error occurred.";
         throw new Error(` ${errorMessage}`);
       }
-      console.log("data", data);
+      setFeedsData(data?.data);
     } catch (error: any) {
       console.log("Error in getFeedsApi", error);
       toast.error(error?.message || "Something went wrong");

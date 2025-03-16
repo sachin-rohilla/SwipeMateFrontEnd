@@ -24,7 +24,6 @@ const useProfile = () => {
         throw new Error(` ${errorMessage}`);
       }
       setUserData(data?.data);
-      console.log(data?.data);
     } catch (error: any) {
       console.log("Profile error:", error?.message || "Something went wrong");
       toast.error(error?.message || "Something went wrong");

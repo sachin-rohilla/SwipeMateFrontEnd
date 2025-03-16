@@ -26,7 +26,7 @@ const useProfile = () => {
       setUserData(data?.data);
     } catch (error: any) {
       console.log("Profile error:", error?.message || "Something went wrong");
-      toast.error(error?.message || "Something went wrong");
+      // toast.error(error?.message || "Something went wrong");
     } finally {
       setIsLoading(false);
     }

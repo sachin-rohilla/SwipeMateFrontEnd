@@ -1,7 +1,12 @@
 import { useAppContext } from "../context/AppContext";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const { userData } = useAppContext();
+  const { logOutApi, isLoading } = useAuth();
+  const handleLogout = () => {
+    logOutApi();
+  };
   return (
     <div className="navbar bg-base-100 shadow-sm px-8">
       <div className="flex-1">
@@ -69,7 +74,7 @@ const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <button onClick={handleLogout}>Logout</button>
             </li>
           </ul>
         </div>

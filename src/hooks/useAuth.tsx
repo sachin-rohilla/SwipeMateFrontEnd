@@ -65,7 +65,31 @@ const useAuth = () => {
     }
   };
 
-  return { loginApi, isLoading };
+  const logOutApi = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/api/logout`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        const errorMessage =
+          data?.message || response.statusText || "An unknown error occurred.";
+        throw new Error(` ${errorMessage}`);
+      }
+      toast.success(data?.message || "Log Out Successfully");
+      setUserData(null);
+      navigate("/login");
+    } catch (error: any) {
+      console.log("LogOut error:", error.message || "Something went wrong");
+      toast.error(error?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { loginApi, signUpApi, logOutApi, isLoading };
 };
 
 export default useAuth;

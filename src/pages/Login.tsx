@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useAppContext } from "../context/AppContext";
+import Loader from "../components/Loader";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -59,6 +60,9 @@ const Login = () => {
 
   if (userData) {
     return <Navigate to="/" />;
+  }
+  if (isLoading) {
+    return <Loader />;
   }
   return (
     <div className="flex items-center justify-center min-h-screen px-4 font-smooth">

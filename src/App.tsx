@@ -4,6 +4,7 @@ import { lazy, Suspense } from "react";
 import Layout from "./Layout/Layout";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import Loader from "./components/Loader";
 
 function App() {
   const Home = lazy(() => import("./pages/Home"));
@@ -12,7 +13,7 @@ function App() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading</div>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route

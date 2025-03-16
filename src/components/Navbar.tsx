@@ -1,4 +1,7 @@
+import { useAppContext } from "../context/AppContext";
+
 const Navbar = () => {
+  const { userData } = useAppContext();
   return (
     <div className="navbar bg-base-100 shadow-sm px-8">
       <div className="flex-1">

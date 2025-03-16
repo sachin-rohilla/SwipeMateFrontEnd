@@ -1,7 +1,8 @@
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { useAppContext } from "../context/AppContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ const Login = () => {
   );
 
   const { loginApi, isLoading } = useAuth();
+  const { userData } = useAppContext();
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -55,6 +57,9 @@ const Login = () => {
     }
   };
 
+  if (userData) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="flex items-center justify-center min-h-screen px-4 font-smooth">
       <div className="flex flex-col md:flex-row items-center w-full max-w-screen-xl">

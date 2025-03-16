@@ -1,8 +1,9 @@
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { lazy, Suspense } from "react";
 import Layout from "./Layout/Layout";
 import { Toaster } from "react-hot-toast";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 function App() {
   const Home = lazy(() => import("./pages/Home"));
@@ -14,8 +15,14 @@ function App() {
       <Suspense fallback={<div>Loading</div>}>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="/about" element={<h1>About</h1>} />
+            <Route
+              index
+              element={
+                <ProtectedRoutes>
+                  <Home />
+                </ProtectedRoutes>
+              }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Route>

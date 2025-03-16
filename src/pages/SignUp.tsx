@@ -1,9 +1,14 @@
 import { Mail, Lock, Eye, EyeOff, User, Calendar } from "lucide-react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { signUpValidationSchema } from "../utils/formSchema";
+import { useAppContext } from "../context/AppContext";
 
 const SignUp = () => {
+  const { userData } = useAppContext();
+  if (userData) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="flex items-center justify-center min-h-screen px-4 font-smooth">
       <div className="flex flex-col md:flex-row items-center w-full max-w-screen-xl">

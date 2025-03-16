@@ -9,7 +9,16 @@ export default {
         stylish: ["Lora", "serif"], // Elegant Font for Buttons & CTA
         smooth: ["Raleway", "sans-serif"], // Light & Stylish Font for Secondary Text
       },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
+        },
+      },
     },
+  },
+  animation: {
+    fadeIn: "fadeIn 0.5s ease-in",
   },
   plugins: [require("daisyui")],
   daisyui: {

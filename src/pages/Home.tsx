@@ -44,6 +44,7 @@ const Home = () => {
           items={feedsData}
           handleInterest={handleInterest}
           handleIgnored={handleIgnored}
+          isLoading={isLoadingRequest}
         />
       )}
     </div>

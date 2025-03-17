@@ -10,6 +10,8 @@ function App() {
   const Home = lazy(() => import("./pages/Home"));
   const Login = lazy(() => import("./pages/Login"));
   const SignUp = lazy(() => import("./pages/SignUp"));
+  const Connections = lazy(() => import("./pages/Connections"));
+  const Requests = lazy(() => import("./pages/Requests"));
 
   return (
     <>
@@ -24,6 +26,23 @@ function App() {
                 </ProtectedRoutes>
               }
             />
+            <Route
+              path="/connections"
+              element={
+                <ProtectedRoutes>
+                  <Connections />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/requests"
+              element={
+                <ProtectedRoutes>
+                  <Requests />
+                </ProtectedRoutes>
+              }
+            />
+
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
           </Route>

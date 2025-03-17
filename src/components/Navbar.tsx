@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import useAuth from "../hooks/useAuth";
 
@@ -10,10 +11,19 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100 shadow-sm px-8">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">SwipeMate</a>
+        <Link to="/" className="btn btn-ghost text-xl ">
+          SwipeMate
+        </Link>
       </div>
-      <div className="flex-none">
-        {userData && (
+      {userData && (
+        <div className="flex-none">
+          <Link to="/connections" className="font-modern font-semibold">
+            Connections
+          </Link>
+          <Link to="/requests" className="font-modern font-semibold px-4">
+            Requests
+          </Link>
+
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -23,7 +33,10 @@ const Navbar = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src={
+                    userData?.profilePicUrl ||
+                    "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  }
                 />
               </div>
             </div>
@@ -43,8 +56,8 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

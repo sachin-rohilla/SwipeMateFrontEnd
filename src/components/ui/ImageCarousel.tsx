@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { FaRegThumbsDown } from "react-icons/fa";
+import { GoHeartFill } from "react-icons/go";
 
 interface ICarouselItem {
   _id: number;
@@ -18,15 +19,30 @@ export default function ImageCarousel({
   items: initialItems,
 }: IImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [interaction, setInteraction] = useState<"none" | "liked" | "rejected">(
+    "none"
+  );
 
   const handleNext = () => {
+    setInteraction("none");
     setCurrentIndex((prevIndex) => (prevIndex + 1) % initialItems.length);
   };
 
   const handlePrev = () => {
+    setInteraction("none");
     setCurrentIndex(
       (prevIndex) => (prevIndex - 1 + initialItems.length) % initialItems.length
     );
+  };
+
+  const handleLike = () => {
+    setInteraction("liked");
+    setTimeout(handleNext, 300);
+  };
+
+  const handleReject = () => {
+    setInteraction("rejected");
+    setTimeout(handleNext, 300);
   };
 
   const totalItems = initialItems.length;
@@ -41,22 +57,37 @@ export default function ImageCarousel({
 
   return (
     <div className="carousel-container relative h-[calc(100vh-70px)] w-full overflow-hidden rounded-2xl border-2 border-gray-200 bg-neutral-content p-2">
+      {/* Left navigation */}
       <div
-        onClick={handlePrev}
-        className="navigation-item-left absolute left-0 top-[50%] z-20 flex h-10 w-10 translate-y-[-50%] cursor-pointer items-center justify-center rounded-lg bg-gray-400 bg-opacity-40 bg-clip-padding backdrop-blur-sm backdrop-filter"
+        onClick={handleReject}
+        className={`navigation-item-left absolute left-0 top-[50%] z-20 flex h-10 w-10 translate-y-[-50%] cursor-pointer items-center justify-center rounded-lg bg-gray-400 bg-opacity-40 bg-clip-padding backdrop-blur-sm backdrop-filter ${
+          interaction === "rejected" ? "animate-bounce" : ""
+        }`}
       >
-        <ChevronLeft className="text-gray-800" />
+        <FaRegThumbsDown className="text-2xl text-primary" />
       </div>
+
+      {/* Right navigation */}
       <div
-        onClick={handleNext}
-        className="navigation-item-right absolute right-0 top-[50%] z-20 flex h-10 w-10 translate-y-[-50%] cursor-pointer items-center justify-center rounded-lg bg-gray-300 bg-opacity-40 bg-clip-padding backdrop-blur-sm backdrop-filter"
+        onClick={handleLike}
+        className={`navigation-item-right absolute right-0 top-[50%] z-20 flex h-10 w-10 translate-y-[-50%] cursor-pointer items-center justify-center rounded-lg bg-gray-300 bg-opacity-40 bg-clip-padding backdrop-blur-sm backdrop-filter ${
+          interaction === "liked" ? "animate-ping" : ""
+        }`}
       >
-        <ChevronRight className="text-gray-800" />
+        <GoHeartFill className="text-2xl text-primary" />
       </div>
+
+      {/* Visible Profile Items */}
       {visibleItems?.map((item, index) => (
         <div
           key={item?._id}
-          className="absolute left-[50%] top-[15%] z-10 h-[450px] w-[300px] animate-fadeIn rounded-xl bg-gray-500"
+          className={`absolute left-[50%] top-[15%] z-10 h-[450px] w-[300px] rounded-xl bg-gray-500 ${
+            interaction === "liked"
+              ? "animate-pulse opacity-50"
+              : interaction === "rejected"
+              ? "animate-shake opacity-50"
+              : "animate-fadeIn"
+          }`}
           style={{
             backgroundImage: `url(${item?.profilePicUrl})`,
             backgroundSize: "cover",

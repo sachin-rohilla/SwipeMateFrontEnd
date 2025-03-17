@@ -13,10 +13,14 @@ interface ICarouselItem {
 
 interface IImageCarouselProps {
   items: ICarouselItem[];
+  handleInterest: (id: string) => void;
+  handleIgnored: (id: string) => void;
 }
 
 export default function ImageCarousel({
   items: initialItems,
+  handleInterest,
+  handleIgnored,
 }: IImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [interaction, setInteraction] = useState<"none" | "liked" | "rejected">(
@@ -38,11 +42,13 @@ export default function ImageCarousel({
   const handleLike = () => {
     setInteraction("liked");
     setTimeout(handleNext, 300);
+    handleInterest(initialItems[currentIndex]?._id.toString());
   };
 
   const handleReject = () => {
     setInteraction("rejected");
     setTimeout(handleNext, 300);
+    handleIgnored(initialItems[currentIndex]?._id.toString());
   };
 
   const totalItems = initialItems.length;

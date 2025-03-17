@@ -8,7 +8,8 @@ import useConnectionRequest from "../hooks/useConnectionRequest";
 const Home = () => {
   const { getFeedsApi, isLoading } = useFeeds();
   const { feedsData } = useAppContext();
-  const { connectionRequestApi } = useConnectionRequest();
+  const { connectionRequestApi, isLoading: isLoadingRequest } =
+    useConnectionRequest();
 
   const handleInterest = (id: string) => {
     connectionRequestApi("interested", id);
@@ -22,14 +23,29 @@ const Home = () => {
   if (isLoading) {
     return <Loader />;
   }
+
+  if (!feedsData?.length) {
+    return (
+      <div className="max-w-3xl w-full mx-auto">
+        <div className="flex flex-col items-center justify-center h-screen">
+          <p className="text-lg font-semibold mt-4 font-modern">
+            No more users to connect
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   console.log(feedsData);
   return (
     <div className="max-w-3xl w-full mx-auto">
-      <ImageCarousel
-        items={feedsData}
-        handleInterest={handleInterest}
-        handleIgnored={handleIgnored}
-      />
+      {feedsData?.length > 0 && (
+        <ImageCarousel
+          items={feedsData}
+          handleInterest={handleInterest}
+          handleIgnored={handleIgnored}
+        />
+      )}
     </div>
   );
 };

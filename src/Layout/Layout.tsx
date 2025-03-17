@@ -9,6 +9,7 @@ const Layout = () => {
   useEffect(() => {
     getProfile();
   }, []);
+
   return (
     <div>
       <Navbar />

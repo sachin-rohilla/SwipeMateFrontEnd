@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaRegThumbsDown } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 
@@ -15,55 +15,65 @@ interface IImageCarouselProps {
   items: ICarouselItem[];
   handleInterest: (id: string) => void;
   handleIgnored: (id: string) => void;
+  fetchNextItems: () => Promise<ICarouselItem[]>;
 }
 
 export default function ImageCarousel({
   items: initialItems,
   handleInterest,
   handleIgnored,
+  fetchNextItems,
 }: IImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [interaction, setInteraction] = useState<"none" | "liked" | "rejected">(
     "none"
   );
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const handleNext = () => {
+  const handleNext = async () => {
     setInteraction("none");
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % initialItems.length);
+    // if (nextItems.length > 0) {
+    //   setCurrentIndex(0);
+    // } else {
+    //   setCurrentIndex((prevIndex) => (prevIndex + 1) % initialItems.length);
+    // }
   };
 
-  const handlePrev = () => {
-    setInteraction("none");
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + initialItems.length) % initialItems.length
-    );
-  };
-
-  const handleLike = () => {
+  const handleLike = async () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setInteraction("liked");
-    setTimeout(handleNext, 300);
-    handleInterest(initialItems[currentIndex]?._id.toString());
+
+    setTimeout(() => {
+      handleInterest(initialItems[currentIndex]?._id.toString());
+      handleNext();
+      setIsAnimating(false);
+    }, 300);
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setInteraction("rejected");
-    setTimeout(handleNext, 300);
-    handleIgnored(initialItems[currentIndex]?._id.toString());
+
+    setTimeout(() => {
+      handleIgnored(initialItems[currentIndex]?._id.toString());
+      handleNext();
+      setIsAnimating(false);
+    }, 300);
   };
 
-  const totalItems = initialItems.length;
-  const visibleItemsCount = totalItems < 3 ? totalItems : 3;
+  useEffect(() => {
+    if (initialItems.length > 0) {
+      setCurrentIndex(0);
+    }
+  }, [initialItems]);
 
-  const visibleIndices = [];
-  for (let i = 0; i < visibleItemsCount; i++) {
-    visibleIndices.push((currentIndex + i) % totalItems);
-  }
-
-  const visibleItems = visibleIndices.map((index) => initialItems[index]);
+  const visibleItem = initialItems[currentIndex];
 
   return (
-    <div className="carousel-container relative h-[calc(100vh-70px)] w-full overflow-hidden rounded-2xl border-2 border-gray-200 bg-neutral-content p-2">
-      {/* Left navigation */}
+    <div className="carousel-container mx-auto relative h-[calc(100vh-70px)] w-full max-w-md overflow-hidden rounded-2xl border-2 border-gray-200 bg-neutral-content p-2">
+      {/* Left navigation (Reject button) */}
       <div
         onClick={handleReject}
         className={`navigation-item-left absolute left-0 top-[50%] z-20 flex h-10 w-10 translate-y-[-50%] cursor-pointer items-center justify-center rounded-lg bg-gray-400 bg-opacity-40 bg-clip-padding backdrop-blur-sm backdrop-filter ${
@@ -73,7 +83,7 @@ export default function ImageCarousel({
         <FaRegThumbsDown className="text-2xl text-primary" />
       </div>
 
-      {/* Right navigation */}
+      {/* Right navigation (Like button) */}
       <div
         onClick={handleLike}
         className={`navigation-item-right absolute right-0 top-[50%] z-20 flex h-10 w-10 translate-y-[-50%] cursor-pointer items-center justify-center rounded-lg bg-gray-300 bg-opacity-40 bg-clip-padding backdrop-blur-sm backdrop-filter ${
@@ -83,41 +93,33 @@ export default function ImageCarousel({
         <GoHeartFill className="text-2xl text-primary" />
       </div>
 
-      {/* Visible Profile Items */}
-      {visibleItems?.map((item, index) => (
+      {/* Visible Profile Item */}
+      {visibleItem && (
         <div
-          key={item?._id}
-          className={`absolute left-[50%] top-[15%] z-10 h-[450px] w-[300px] rounded-xl bg-gray-500 ${
-            interaction === "liked"
-              ? "animate-pulse opacity-50"
-              : interaction === "rejected"
-              ? "animate-shake opacity-50"
-              : "animate-fadeIn"
-          }`}
+          key={visibleItem?._id}
+          className={`absolute left-[50%] top-[10%] z-10 h-[500px] w-[350px] rounded-xl bg-gray-500`}
           style={{
-            backgroundImage: `url(${item?.profilePicUrl})`,
+            backgroundImage: `url(${visibleItem?.profilePicUrl})`,
             backgroundSize: "cover",
             transform:
-              index === 1
-                ? "translateX(-50%) scale(1.1)"
-                : index === 0
-                ? totalItems === 1
-                  ? "translateX(-50%) scale(1)"
-                  : "translateX(-150%) rotate(-20deg)"
-                : "translateX(50%) rotate(20deg)",
-            transition: "transform 0.5s ease, filter 0.5s ease",
-            filter: index === 1 || totalItems === 1 ? "none" : "blur(4px)",
-            zIndex: index === 1 || totalItems === 1 ? 3 : 1,
+              interaction === "liked"
+                ? "translateX(60%) rotate(20deg)"
+                : interaction === "rejected"
+                ? "translateX(-150%) rotate(-20deg)"
+                : "translateX(-50%)",
+            transition: "transform 0.3s ease, opacity 0.3s ease",
+            opacity: interaction === "none" ? 1 : 0.5,
+            zIndex: 3,
           }}
         >
           <div className="absolute bottom-0 left-0 p-4 w-full bg-black/50 rounded-b-xl text-white font-modern capitalize">
-            <h1 className="text-xl font-bold">{item?.firstName}</h1>
-            <p className="text-sm">{item?.age} years old</p>
-            <p className="text-sm">{item?.location}</p>
-            <p className="text-sm">{item?.gender}</p>
+            <h1 className="text-xl font-bold">{visibleItem?.firstName}</h1>
+            <p className="text-sm">{visibleItem?.age} years old</p>
+            <p className="text-sm">{visibleItem?.location}</p>
+            <p className="text-sm">{visibleItem?.gender}</p>
           </div>
         </div>
-      ))}
+      )}
     </div>
   );
 }

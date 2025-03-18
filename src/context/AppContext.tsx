@@ -16,6 +16,8 @@ interface AppContextType {
   setUserData: (userData: User | null) => void;
   feedsData: Feed[];
   setFeedsData: (feedsData: Feed[]) => void;
+  connections: any[];
+  setConnections: (connections: any[]) => void;
 }
 
 interface AppContextProviderProps {
@@ -27,15 +29,25 @@ export const AppContext = createContext<AppContextType>({
   setUserData: () => {},
   feedsData: [],
   setFeedsData: () => {},
+  connections: [],
+  setConnections: () => {},
 });
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [feedsData, setFeedsData] = useState<Feed[]>([]);
+  const [connections, setConnections] = useState<any[]>([]);
 
   return (
     <AppContext.Provider
-      value={{ userData, setUserData, feedsData, setFeedsData }}
+      value={{
+        userData,
+        setUserData,
+        feedsData,
+        setFeedsData,
+        connections,
+        setConnections,
+      }}
     >
       {children}
     </AppContext.Provider>

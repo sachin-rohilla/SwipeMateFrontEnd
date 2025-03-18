@@ -30,6 +30,7 @@ const useFeeds = () => {
       setIsLoading(false);
     }
   };
+
   return {
     getFeedsApi,
     isLoading,

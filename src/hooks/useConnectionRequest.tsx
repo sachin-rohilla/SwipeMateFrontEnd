@@ -5,8 +5,13 @@ import { useAppContext } from "../context/AppContext";
 
 const useConnectionRequest = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { setFeedsData, feedsData, setConnections, setReceivedRequests } =
-    useAppContext();
+  const {
+    setFeedsData,
+    feedsData,
+    setConnections,
+    receivedRequests,
+    setReceivedRequests,
+  } = useAppContext();
 
   const connectionRequestApi = async (status: string, id: string) => {
     try {
@@ -34,6 +39,42 @@ const useConnectionRequest = () => {
     } catch (error: any) {
       console.log(
         "Connection request error:",
+        error?.message || "Something went wrong"
+      );
+      toast.error(error?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const acceptRejectRequestApi = async (status: string, id: string) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `${API_URL}/api/review/request/${status}/${id}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      if (!response.ok) {
+        const errorMessage =
+          data?.message || response.statusText || "An unknown error occurred.";
+        throw new Error(` ${errorMessage}`);
+      }
+      const filterData =
+        receivedRequests?.length > 0 &&
+        receivedRequests?.filter(
+          (item: any) => item?.fromUserId?._id !== data?.data?.fromUserId
+        );
+      setReceivedRequests(filterData);
+    } catch (error: any) {
+      console.log(
+        "Error in acceptRejectApi",
         error?.message || "Something went wrong"
       );
       toast.error(error?.message || "Something went wrong");
@@ -94,6 +135,7 @@ const useConnectionRequest = () => {
   };
   return {
     connectionRequestApi,
+    acceptRejectRequestApi,
     getAcceptedRequestApi,
     getReceivedRequestApi,
     isLoading,

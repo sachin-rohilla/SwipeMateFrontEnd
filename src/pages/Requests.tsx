@@ -2,16 +2,28 @@ import React, { useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
 import useConnectionRequest from "../hooks/useConnectionRequest";
 import { FaInfoCircle } from "react-icons/fa";
-import TiltedCover from "../components/ui/TitledCover";
 import Skeleton from "../components/Skeleton";
+import TiltedCover from "../components/ui/TitledCover";
 
 const Requests = () => {
   const { receivedRequests } = useAppContext();
-  const { getReceivedRequestApi, isLoading } = useConnectionRequest();
+  const { getReceivedRequestApi, acceptRejectRequestApi, isLoading } =
+    useConnectionRequest();
+
+  const handleAccepetRequest = (id: string) => {
+    acceptRejectRequestApi("accepted", id);
+    console.log(id);
+  };
+  const handleRejectRequest = (id: string) => {
+    acceptRejectRequestApi("rejected", id);
+    console.log(id);
+  };
 
   useEffect(() => {
     getReceivedRequestApi();
   }, []);
+
+  console.log(receivedRequests, "receivedRequests");
 
   if (isLoading) {
     return (
@@ -31,31 +43,44 @@ const Requests = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {receivedRequests?.length > 0 &&
           receivedRequests.map((item, index) => (
-            <div key={item.id} className="w-full ">
+            <div key={item.id} className="w-full relative">
               <TiltedCover
                 image={{
-                  alt: item?.firstName + " " + item?.lastName || "No Name",
-                  src: item?.profilePicUrl || "",
+                  alt:
+                    item?.fromUserId?.firstName +
+                      " " +
+                      item?.fromUserId?.lastName || "No Name",
+                  src: item?.fromUserId?.profilePicUrl || "",
                 }}
                 direction={"left"}
                 tiltCover={true}
+                showButton={true}
+                handleAccept={handleAccepetRequest}
+                handleReject={handleRejectRequest}
+                id={item?._id}
               >
                 <div className="p-4">
                   <h2 className="text-xl font-semibold capitalize mb-2">
-                    {item?.firstName || ""} {item?.lastName || ""}
+                    {item?.fromUserId?.firstName || ""}{" "}
+                    {item?.fromUserId?.lastName || ""}
                   </h2>
                   <div className="text-gray-600 flex items-center mt-2">
                     <FaInfoCircle className="mr-2 text-lg" />
                     <p className="text-sm">
-                      {item?.about || "No about information available."}
+                      {item?.fromUserId?.about ||
+                        "No about information available."}
                     </p>
                   </div>
                   <div className="text-gray-600 flex items-center mt-2">
                     <FaInfoCircle className="mr-2 text-lg" />
-                    <p className="text-sm">{item?.gender || "Not specified"}</p>
+                    <p className="text-sm">
+                      {item?.fromUserId?.gender || "Not specified"}
+                    </p>
                   </div>
                 </div>
               </TiltedCover>
+
+              {/* Button Container */}
             </div>
           ))}
       </div>

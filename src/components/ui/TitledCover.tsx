@@ -1,28 +1,18 @@
 import { ReactNode } from "react";
 import { cn } from "../../libs/utils";
+import { FaCheck } from "react-icons/fa";
+import { MdCheck, MdClose } from "react-icons/md";
 
 interface TiltedCoverProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: "left" | "right";
-
-  /**
-   * The content to be displayed on the cover
-   */
   cover?: ReactNode;
-
-  /**
-   * Determines if the cover should tilt with the background
-   */
   tiltCover?: boolean;
-
-  /**
-   * The content to be displayed on the background
-   */
   children?: ReactNode;
-
-  /**
-   * The image to be displayed on the cover. Takes precedence over `children`.
-   */
   image?: React.ComponentPropsWithoutRef<"img">;
+  showButton?: boolean;
+  handleAccept?: any;
+  handleReject?: any;
+  id?: string;
 }
 
 export default function TiltedCover({
@@ -31,17 +21,20 @@ export default function TiltedCover({
   tiltCover = true,
   cover,
   image,
+  showButton,
+  handleAccept,
+  handleReject,
+  id,
 }: TiltedCoverProps) {
   const tiltLeft = direction === "left";
   const factor = tiltLeft ? 1 : -1;
 
   return (
-    // The container has height and width set to the size of the content + padding.
     <div className="flex w-96 h-96 sm:h-96 sm:w-96 items-center justify-center overflow-hidden">
       <div className="group relative h-80 w-64 sm:w-64">
         {/* Background content */}
         <div
-          className="border-box border-1 pointer-events-none relative h-full w-full overflow-hidden rounded-xl border bg-background transition-all duration-500 ease-slow group-hover:!transform-none border-neutral"
+          className="border-box border-1 relative h-full w-full overflow-hidden rounded-xl border bg-background transition-all duration-500 ease-slow group-hover:!transform-none border-neutral"
           style={{
             transform: `perspective(400px) rotateY(${
               factor * 20
@@ -49,6 +42,20 @@ export default function TiltedCover({
           }}
         >
           {children}
+
+          {/* Buttons Container */}
+          {showButton && (
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 flex justify-center w-3/4 px-4 space-x-4">
+              <button onClick={() => handleAccept(id)} className="btn">
+                <MdCheck size={20} />
+                Accept
+              </button>
+              <button onClick={() => handleReject(id)} className="btn">
+                <MdClose size={20} />
+                Reject
+              </button>
+            </div>
+          )}
           <div className="absolute inset-0 h-full w-full bg-gray-400/10 transition-all group-hover:bg-transparent" />
         </div>
 
@@ -69,11 +76,8 @@ export default function TiltedCover({
         >
           <div className="h-full w-full rounded-md object-cover">
             {image ? (
-              /* Use `next/image` and remove the line below. */
-              /* eslint-disable-next-line @next/next/no-img-element */
               <img
-                src=""
-                alt=""
+                alt={image?.alt || ""}
                 {...image}
                 className={cn(
                   "h-full w-full rounded-md object-cover",

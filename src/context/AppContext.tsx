@@ -11,6 +11,13 @@ interface Feed {
   timestamp: string;
 }
 
+interface Request {
+  id: string;
+  sender: string;
+  message: string;
+  timestamp: string;
+}
+
 interface AppContextType {
   userData: User | null;
   setUserData: (userData: User | null) => void;
@@ -18,6 +25,8 @@ interface AppContextType {
   setFeedsData: (feedsData: Feed[]) => void;
   connections: any[];
   setConnections: (connections: any[]) => void;
+  receivedRequests: Request[];
+  setReceivedRequests: (requests: Request[]) => void;
 }
 
 interface AppContextProviderProps {
@@ -31,12 +40,15 @@ export const AppContext = createContext<AppContextType>({
   setFeedsData: () => {},
   connections: [],
   setConnections: () => {},
+  receivedRequests: [],
+  setReceivedRequests: () => {},
 });
 
 export const AppContextProvider = ({ children }: AppContextProviderProps) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [feedsData, setFeedsData] = useState<Feed[]>([]);
   const [connections, setConnections] = useState<any[]>([]);
+  const [receivedRequests, setReceivedRequests] = useState<Request[]>([]);
 
   return (
     <AppContext.Provider
@@ -47,6 +59,8 @@ export const AppContextProvider = ({ children }: AppContextProviderProps) => {
         setFeedsData,
         connections,
         setConnections,
+        receivedRequests,
+        setReceivedRequests,
       }}
     >
       {children}

@@ -12,18 +12,14 @@ const Requests = () => {
 
   const handleAccepetRequest = (id: string) => {
     acceptRejectRequestApi("accepted", id);
-    console.log(id);
   };
   const handleRejectRequest = (id: string) => {
     acceptRejectRequestApi("rejected", id);
-    console.log(id);
   };
 
   useEffect(() => {
     getReceivedRequestApi();
   }, []);
-
-  console.log(receivedRequests, "receivedRequests");
 
   if (isLoading) {
     return (
@@ -33,6 +29,20 @@ const Requests = () => {
             <Skeleton />
           </div>
         ))}
+      </div>
+    );
+  }
+
+  if (!receivedRequests?.length) {
+    return (
+      <div className="min-h-screen max-w-6xl w-full font-modern mx-auto p-8 flex flex-col items-center justify-center">
+        <p className="text-8xl">🤷‍♂️🤷‍♀️</p>
+        <p className="text-lg font-semibold mt-4 text-center text-gray-500">
+          No connection requests at the moment.
+        </p>
+        <p className="text-md mt-2 text-gray-500">
+          It looks like you're all caught up! Check back later.
+        </p>
       </div>
     );
   }

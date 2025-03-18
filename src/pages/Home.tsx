@@ -27,9 +27,17 @@ const Home = () => {
   if (!feedsData?.length) {
     return (
       <div className="max-w-3xl w-full mx-auto">
-        <div className="flex flex-col items-center justify-center h-screen">
-          <p className="text-lg font-semibold mt-4 font-modern">
-            No more users to connect
+        <div className="flex flex-col items-center justify-center h-screen font-modern">
+          <img
+            src="./no.png"
+            alt="No users available"
+            className="w-40 h-40 object-cover"
+          />
+          <p className="text-lg font-semibold mt-4  text-center text-gray-500">
+            It looks like you've connected with all available users for now.
+          </p>
+          <p className="text-md mt-2 text-gray-500">
+            Check back later or explore other options.
           </p>
         </div>
       </div>

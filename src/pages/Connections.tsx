@@ -25,6 +25,20 @@ const Connections = () => {
     );
   }
 
+  if (!connections?.length) {
+    return (
+      <div className="min-h-screen max-w-6xl font-modern w-full mx-auto p-8 flex flex-col items-center justify-center">
+        <p className="text-8xl">🤷‍♂️🤷‍♀️</p>
+        <p className="text-lg font-semibold mt-4  text-center text-gray-500">
+          No connections at the moment.
+        </p>
+        <p className="text-md mt-2 text-gray-500">
+          It looks like you're all caught up! Check back later.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen max-w-6xl w-full mx-auto p-8">
       <h1 className="font-modern font-bold text-2xl text-center">

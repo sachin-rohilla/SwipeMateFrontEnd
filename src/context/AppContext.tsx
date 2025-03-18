@@ -25,8 +25,8 @@ interface AppContextType {
   setFeedsData: (feedsData: Feed[]) => void;
   connections: any[];
   setConnections: (connections: any[]) => void;
-  receivedRequests: Request[];
-  setReceivedRequests: (requests: Request[]) => void;
+  receivedRequests: any[];
+  setReceivedRequests: (requests: any[]) => void;
 }
 
 interface AppContextProviderProps {

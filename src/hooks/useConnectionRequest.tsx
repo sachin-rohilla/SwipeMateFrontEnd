@@ -84,10 +84,9 @@ const useConnectionRequest = () => {
           data?.message || response.statusText || "An unknown error occurred.";
         throw new Error(` ${errorMessage}`);
       }
-
       setReceivedRequests(data?.data);
     } catch (error: any) {
-      console.log("Error in getAcceptedRequestApi", error);
+      console.log("Error in getReceivedRequestApi", error);
       toast.error(error?.message || "Something went wrong");
     } finally {
       setIsLoading(false);

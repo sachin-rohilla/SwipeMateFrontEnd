@@ -68,7 +68,7 @@ export default function ImageCarousel({
   const visibleItem = initialItems[currentIndex];
 
   return (
-    <div className="carousel-container mx-auto relative mt-6 h-[calc(100vh-90px)] w-full max-w-md overflow-hidden rounded-2xl border-2 border-gray-200 bg-neutral-content p-2">
+    <div className="carousel-container mx-auto relative mt-6 h-[calc(100vh-90px)] w-full max-w-md overflow-hidden rounded-2xl  p-2">
       {/* Left navigation (Reject button) */}
       <button
         onClick={handleReject}
@@ -77,7 +77,7 @@ export default function ImageCarousel({
           interaction === "rejected" ? "animate-bounce" : ""
         }`}
       >
-        <FaRegThumbsDown className="text-2xl text-primary" />
+        <FaRegThumbsDown className="text-2xl text-warning" />
       </button>
 
       {/* Right navigation (Like button) */}
@@ -88,7 +88,7 @@ export default function ImageCarousel({
           interaction === "liked" ? "animate-ping" : ""
         }`}
       >
-        <GoHeartFill className="text-2xl text-primary" />
+        <GoHeartFill className="text-2xl text-red-500" />
       </button>
 
       {/* Visible Profile Item */}

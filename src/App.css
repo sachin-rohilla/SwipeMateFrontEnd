@@ -1,0 +1,10 @@
+#textarea {
+  border: none !important;
+  outline: none !important;
+}
+
+#textarea:focus,
+#textarea:active {
+  border: none !important;
+  box-shadow: none !important;
+}

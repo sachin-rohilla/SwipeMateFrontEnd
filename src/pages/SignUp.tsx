@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Link, Navigate } from "react-router-dom";
 import { signUpValidationSchema } from "../utils/formSchema";
 import { useAppContext } from "../context/AppContext";
+import { CiUser } from "react-icons/ci";
 
 const SignUp = () => {
   const { userData } = useAppContext();
@@ -30,14 +31,15 @@ const SignUp = () => {
             password: "",
             confirmPassword: "",
             age: "",
-            gender: "male",
+            gender: "",
+            about: "",
           }}
           validationSchema={signUpValidationSchema}
           onSubmit={(values) => {
             console.log(values);
           }}
         >
-          {({ setFieldValue, values }) => (
+          {({}) => (
             <Form className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 w-full sm:w-96 md:w-1/2">
               <div className="text-center mb-4 col-span-full">
                 <h1 className="text-3xl font-semibold text-primary">Sign Up</h1>
@@ -45,7 +47,6 @@ const SignUp = () => {
                   Ready to start something special? Let’s create your account 💖
                 </p>
               </div>
-
               {/* First Name */}
               <div className="flex flex-col gap-2 col-span-full sm:col-span-1">
                 <label className="input flex border border-base-300 items-center gap-2">
@@ -63,7 +64,6 @@ const SignUp = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
-
               {/* Last Name */}
               <div className="flex flex-col gap-2 col-span-full sm:col-span-1">
                 <label className="input flex border border-base-300 items-center gap-2">
@@ -81,7 +81,6 @@ const SignUp = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
-
               {/* Email */}
               <div className="flex flex-col gap-2 col-span-full">
                 <label className="input flex border border-base-300 items-center gap-2">
@@ -99,7 +98,6 @@ const SignUp = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
-
               {/* Password */}
               <div className="flex flex-col gap-2 col-span-full">
                 <label className="input flex border border-base-300 items-center gap-2">
@@ -117,7 +115,6 @@ const SignUp = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
-
               {/* Confirm Password */}
               <div className="flex flex-col gap-2 col-span-full">
                 <label className="input flex border border-base-300 items-center gap-2">
@@ -135,7 +132,6 @@ const SignUp = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
-
               {/* Age */}
               <div className="flex flex-col gap-2 col-span-full sm:col-span-1">
                 <label className="input flex border border-base-300 items-center gap-2">
@@ -153,32 +149,48 @@ const SignUp = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
-
               {/* Gender */}
               <div className="flex flex-col gap-2 col-span-full sm:col-span-1">
-                <label className=" flex  items-center gap-2">
-                  {/* <select
+                <label className="flex items-center gap-2">
+                  <Field
+                    as="select"
                     name="gender"
-                    defaultValue={"Gender"}
-                    value={values.gender}
-                    onChange={(e) => setFieldValue("gender", e.target.value)}
-                    className="p-2 select rounded w-full border-none mt-1"
-                  ></select> */}
-
-                  <select
-                    defaultValue="male"
                     className="select w-full border border-base-300"
-                    value={values.gender}
-                    onChange={(e) => setFieldValue("gender", e.target.value)}
                   >
-                    <option disabled={true}>Gender</option>
+                    <option value="" disabled>
+                      Gender
+                    </option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
-                  </select>
+                  </Field>
                 </label>
+                <ErrorMessage
+                  name="gender"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
               </div>
 
+              {/* about */}
+
+              <div className="flex flex-col gap-2 col-span-full">
+                <label className="textarea textarea-bordered flex items-start ">
+                  <CiUser className="h-5 w-5 opacity-50 mt-4" size={20} />
+                  <Field
+                    as="textarea"
+                    id="textarea"
+                    name="about"
+                    className="textarea resize-none p-2 w-full mt-1 focus:border-none focus:ring-0 border-base-300"
+                    placeholder="About"
+                  />
+                </label>
+                <ErrorMessage
+                  name="about"
+                  component="div"
+                  className="text-red-500 text-sm"
+                />
+              </div>
               {/* Submit Button */}
               <div className="text-center mt-6 col-span-full">
                 <button
@@ -193,7 +205,6 @@ const SignUp = () => {
                   </div>
                 </button>
               </div>
-
               {/* Already Have an Account Link */}
               <div className="text-center mt-4 col-span-full">
                 <p className="text-sm text-gray-500">

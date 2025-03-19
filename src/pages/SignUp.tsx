@@ -1,24 +1,74 @@
-import { Mail, Lock, Eye, EyeOff, User, Calendar } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, User, Calendar, Trash } from "lucide-react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Link, Navigate } from "react-router-dom";
 import { signUpValidationSchema } from "../utils/formSchema";
 import { useAppContext } from "../context/AppContext";
 import { CiUser } from "react-icons/ci";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import UploadImageComp from "../components/UploadImageComp";
+
+declare global {
+  interface Window {
+    cloudinary: any;
+  }
+}
 
 const SignUp = () => {
   const { userData } = useAppContext();
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const handleUpload = () => {
+    if (window.cloudinary) {
+      setIsLoading(true);
+      window.cloudinary.openUploadWidget(
+        {
+          cloudName: import.meta.env.VITE_CLOUDINARY_NAME,
+          uploadPreset: import.meta.env.VITE_CLOUDINARY_PRESET,
+          cropping: true,
+          showAdvancedOptions: true,
+          sources: ["local"],
+          multiple: false,
+          maxFileSize: 5 * 1024 * 1024,
+          acceptedFiles: "image/jpeg,image/jpg,image/png",
+        },
+        (error: any, result: any) => {
+          setIsLoading(false);
+          if (error) {
+            console.error("Error uploading image:", error);
+            toast.error("Error uploading image. Please try again.");
+          } else if (result && result.event === "success") {
+            // console.log("Upload result:", result);
+            const fileType = result.info.format.toLowerCase();
+            if (["jpg", "jpeg", "png"].includes(fileType)) {
+              setImageUrl(result.info.secure_url);
+              // console.log("Image URL set:", result.info.secure_url);
+            } else {
+              toast.error(
+                "Invalid file type. Please upload a JPG, JPEG, or PNG image."
+              );
+            }
+          }
+        }
+      );
+    } else {
+      console.error("Cloudinary library is not loaded properly.");
+      toast.error("Something went wrong! Please refresh the page.");
+    }
+  };
+  const handleSubmit = () => {};
   if (userData) {
     return <Navigate to="/" />;
   }
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 font-smooth">
-      <div className="flex flex-col md:flex-row items-center w-full max-w-screen-xl">
+    <div className="flex items-center  justify-center min-h-screen px-4 font-smooth">
+      <div className="flex flex-col md:flex-row  w-full max-w-screen-xl">
         {/* Left Image Section (Small Image) */}
         <div className="md:w-1/2 mb-8 md:mb-0 p-4 flex justify-center">
           <img
             src="./main.png"
             alt="Sign Up Illustration"
-            className="w-full h-auto rounded-lg"
+            className="w-full h-[100vh] rounded-lg"
           />
         </div>
 
@@ -35,9 +85,7 @@ const SignUp = () => {
             about: "",
           }}
           validationSchema={signUpValidationSchema}
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={handleSubmit}
         >
           {({}) => (
             <Form className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 w-full sm:w-96 md:w-1/2">
@@ -190,6 +238,39 @@ const SignUp = () => {
                   component="div"
                   className="text-red-500 text-sm"
                 />
+              </div>
+
+              {/* image upload button  */}
+              <div className="w-full col-span-full">
+                <UploadImageComp
+                  handleUpload={handleUpload}
+                  imageUrl={imageUrl}
+                  isLoading={isLoading}
+                />
+                {imageUrl && (
+                  <div className="flex flex-col justify-center items-center">
+                    <img
+                      src={imageUrl}
+                      alt="Uploaded"
+                      className="w-60 mx-auto rounded-xl h-60 object-cover mt-4"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setImageUrl(""),
+                          toast.success("Image deleted successfully");
+                      }}
+                      className="group relative   mt-4 inline-flex h-10 items-center justify-center overflow-hidden rounded-full border-2 dark:border-error border-error font-medium"
+                    >
+                      <div className="inline-flex h-10 translate-x-0 items-center justify-center gradient-button px-6 dark:text-error text-error transition group-hover:-translate-x-[150%]">
+                        Delete Image
+                      </div>
+                      <div className="absolute inline-flex h-10 w-full translate-x-[100%] items-center justify-center bg-error dark:bg-error px-6 text-white transition duration-300 group-hover:translate-x-0">
+                        <Trash size={20} />
+                      </div>
+                    </button>
+                  </div>
+                )}
               </div>
               {/* Submit Button */}
               <div className="text-center mt-6 col-span-full">

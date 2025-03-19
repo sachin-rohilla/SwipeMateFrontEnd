@@ -7,6 +7,8 @@ import { CiUser } from "react-icons/ci";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import UploadImageComp from "../components/UploadImageComp";
+import useAuth from "../hooks/useAuth";
+import Loader from "../components/Loader";
 
 declare global {
   interface Window {
@@ -18,6 +20,8 @@ const SignUp = () => {
   const { userData } = useAppContext();
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { signUpApi, isLoading: isSignUpLoading } = useAuth();
   const handleUpload = () => {
     if (window.cloudinary) {
       setIsLoading(true);
@@ -56,9 +60,13 @@ const SignUp = () => {
       toast.error("Something went wrong! Please refresh the page.");
     }
   };
-  const handleSubmit = () => {};
+
   if (userData) {
     return <Navigate to="/" />;
+  }
+
+  if (isSignUpLoading) {
+    return <Loader />;
   }
   return (
     <div className="flex items-center  justify-center min-h-screen px-4 font-smooth">
@@ -83,9 +91,18 @@ const SignUp = () => {
             age: "",
             gender: "",
             about: "",
+            profilePicUrl: "",
           }}
           validationSchema={signUpValidationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={(values) => {
+            if (imageUrl) {
+              values.profilePicUrl = imageUrl;
+
+              signUpApi(values);
+            } else {
+              toast.error("Please upload a profile picture");
+            }
+          }}
         >
           {({}) => (
             <Form className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 w-full sm:w-96 md:w-1/2">

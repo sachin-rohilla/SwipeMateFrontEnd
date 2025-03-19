@@ -68,7 +68,7 @@ export default function ImageCarousel({
   const visibleItem = initialItems[currentIndex];
 
   return (
-    <div className="carousel-container mx-auto relative mt-6 h-[calc(100vh-90px)] w-full max-w-md overflow-hidden rounded-2xl  p-2">
+    <div className="carousel-container mx-auto relative mt-6 h-[calc(100vh)] w-full max-w-md overflow-hidden rounded-2xl  p-2">
       {/* Left navigation (Reject button) */}
       <button
         onClick={handleReject}

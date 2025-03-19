@@ -11,6 +11,7 @@ const UploadImageComp = ({
       {" "}
       {!imageUrl && (
         <button
+          type="button"
           onClick={handleUpload}
           className="   h-40  w-full flex items-center justify-center border border-dashed  border-base-300 
     "

@@ -12,6 +12,7 @@ function App() {
   const SignUp = lazy(() => import("./pages/SignUp"));
   const Connections = lazy(() => import("./pages/Connections"));
   const Requests = lazy(() => import("./pages/Requests"));
+  const Profile = lazy(() => import("./pages/Profile"));
 
   return (
     <>
@@ -39,6 +40,14 @@ function App() {
               element={
                 <ProtectedRoutes>
                   <Requests />
+                </ProtectedRoutes>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoutes>
+                  <Profile />
                 </ProtectedRoutes>
               }
             />

@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { cn } from "../../libs/utils";
-import { FaCheck } from "react-icons/fa";
 import { MdCheck, MdClose } from "react-icons/md";
 
 interface TiltedCoverProps extends React.HTMLAttributes<HTMLDivElement> {

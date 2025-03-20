@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useProfile from "../hooks/useProfile";
-import Loader from "../components/Loader";
-import { Mail, Lock, User, Calendar, Trash } from "lucide-react";
+import { Mail, User, Calendar, Trash } from "lucide-react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { CiUser } from "react-icons/ci";
 import toast from "react-hot-toast";

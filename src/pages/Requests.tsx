@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
 import useConnectionRequest from "../hooks/useConnectionRequest";
 import { FaInfoCircle } from "react-icons/fa";
@@ -52,7 +52,7 @@ const Requests = () => {
       <h1 className="font-modern font-bold text-2xl text-center">Requests</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {receivedRequests?.length > 0 &&
-          receivedRequests.map((item, index) => (
+          receivedRequests.map((item) => (
             <div key={item.id} className="w-full relative">
               <TiltedCover
                 image={{

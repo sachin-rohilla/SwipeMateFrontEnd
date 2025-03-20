@@ -4,7 +4,7 @@ import useProfile from "../hooks/useProfile";
 import { useEffect } from "react";
 
 const Layout = () => {
-  const { getProfile, isLoading } = useProfile();
+  const { getProfile } = useProfile();
 
   useEffect(() => {
     getProfile();

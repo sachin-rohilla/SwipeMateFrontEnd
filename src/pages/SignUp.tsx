@@ -1,4 +1,4 @@
-import { Mail, Lock, Eye, EyeOff, User, Calendar, Trash } from "lucide-react";
+import { Mail, Lock, User, Calendar, Trash } from "lucide-react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Link, Navigate } from "react-router-dom";
 import { signUpValidationSchema } from "../utils/formSchema";

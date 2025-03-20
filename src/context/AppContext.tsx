@@ -26,7 +26,7 @@ interface AppContextType {
   connections: any[];
   setConnections: (connections: any[]) => void;
   receivedRequests: any[];
-  setReceivedRequests: (requests: any[]) => void;
+  setReceivedRequests: any;
 }
 
 interface AppContextProviderProps {

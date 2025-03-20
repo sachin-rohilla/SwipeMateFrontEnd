@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import useAuth from "../hooks/useAuth";
+import { AiOutlineLogout } from "react-icons/ai";
+import ThemeToggleComp from "./ThemeToggleComp";
 
 const Navbar = () => {
   const { userData } = useAppContext();
@@ -15,12 +17,26 @@ const Navbar = () => {
           SwipeMate
         </Link>
       </div>
+
+      <ThemeToggleComp />
+
       {userData && (
         <div className="flex-none">
-          <Link to="/connections" className="font-modern font-semibold">
+          <input
+            type="checkbox"
+            value="synthwave"
+            className="toggle theme-controller"
+          />
+          <Link
+            to="/connections"
+            className="font-modern font-semibold hidden sm:block"
+          >
             Connections
           </Link>
-          <Link to="/requests" className="font-modern font-semibold px-4">
+          <Link
+            to="/requests"
+            className="font-modern font-semibold px-4 hidden sm:block"
+          >
             Requests
           </Link>
 
@@ -42,7 +58,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
             >
               <li>
                 <Link to={"/profile"} className="justify-between">
@@ -52,7 +68,24 @@ const Navbar = () => {
               </li>
 
               <li>
-                <button onClick={handleLogout}>Logout</button>
+                <Link
+                  to="/connections"
+                  className="font-modern  block sm:hidden"
+                >
+                  Connections
+                </Link>
+              </li>
+              <li>
+                <Link to="/requests" className="font-modern  block sm:hidden">
+                  Requests
+                </Link>
+              </li>
+
+              <li>
+                <button onClick={handleLogout}>
+                  Logout
+                  <AiOutlineLogout size={15} />
+                </button>
               </li>
             </ul>
           </div>

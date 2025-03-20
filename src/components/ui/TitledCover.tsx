@@ -50,6 +50,7 @@ export default function TiltedCover({
                 <MdCheck size={20} />
                 Accept
               </button>
+
               <button onClick={() => handleReject(id)} className="btn">
                 <MdClose size={20} />
                 Reject

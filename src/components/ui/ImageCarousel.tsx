@@ -68,7 +68,7 @@ export default function ImageCarousel({
   const visibleItem = initialItems[currentIndex];
 
   return (
-    <div className="carousel-container mx-auto relative mt-6 h-[calc(100vh)] w-full max-w-md overflow-hidden rounded-2xl  p-2">
+    <div className="carousel-container mx-auto relative mt-6  h-[calc(100vh-90px)] w-full max-w-md overflow-hidden rounded-2xl  p-2">
       {/* Left navigation (Reject button) */}
       <button
         onClick={handleReject}
@@ -95,7 +95,7 @@ export default function ImageCarousel({
       {visibleItem && (
         <div
           key={visibleItem?._id}
-          className={`absolute left-[50%] top-[10%] z-10 h-[500px] w-[350px] rounded-xl bg-gray-500 transition-all duration-300 ease-in-out`}
+          className={`absolute left-[50%] top-[0%] z-10 h-[500px] w-[350px] rounded-xl bg-gray-500 transition-all duration-300 ease-in-out`}
           style={{
             backgroundImage: `url(${visibleItem?.profilePicUrl})`,
             backgroundSize: "cover",

@@ -74,7 +74,7 @@ const SignUp = () => {
         {/* Left Image Section (Small Image) */}
         <div className="md:w-1/2 mb-8 md:mb-0 p-4 flex justify-center">
           <img
-            src="./main.png"
+            src="./love.png"
             alt="Sign Up Illustration"
             className="w-full h-[100vh] rounded-lg"
           />

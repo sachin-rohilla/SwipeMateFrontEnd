@@ -15,7 +15,7 @@ const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { userData } = useAppContext();
 
-  const { getProfile, isLoading: isProfileLoading } = useProfile();
+  const { updateProfile, isLoading: isProfileLoading } = useProfile();
 
   useEffect(() => {
     if (userData) {
@@ -67,7 +67,7 @@ const Profile = () => {
   return (
     <div className="flex flex-col items-center">
       {imageUrl && (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center mt-8">
           <div className="avatar">
             <div className="ring-primary ring-offset-base-100 w-40 rounded-full ring ring-offset-2">
               <img src={imageUrl} />
@@ -91,7 +91,7 @@ const Profile = () => {
       )}
 
       {/* Image upload button */}
-      <div className="w-1/2 p-6">
+      <div className="w-1/2 px-6 mb-2">
         <UploadImageComp
           handleUpload={handleUpload}
           imageUrl={imageUrl}
@@ -114,6 +114,7 @@ const Profile = () => {
         onSubmit={(values) => {
           if (imageUrl) {
             values.profilePicUrl = imageUrl;
+            updateProfile(values);
           } else {
             toast.error("Please upload a profile picture");
           }

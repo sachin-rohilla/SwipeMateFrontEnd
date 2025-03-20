@@ -32,7 +32,34 @@ const useProfile = () => {
       setIsLoading(false);
     }
   };
-  return { getProfile, isLoading };
+
+  const updateProfile = async (payload: any) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/api/update-profile`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        const errorMessage =
+          data?.message || response.statusText || "An unknown error occurred.";
+        throw new Error(` ${errorMessage}`);
+      }
+      setUserData(data?.data);
+      toast.success(data?.message || "Profile updated successfully");
+    } catch (error: any) {
+      console.log("Profile error:", error?.message || "Something went wrong");
+      toast.error(error?.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  return { getProfile, updateProfile, isLoading };
 };
 
 export default useProfile;

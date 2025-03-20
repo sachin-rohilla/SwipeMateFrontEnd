@@ -46,7 +46,15 @@ const Home = () => {
 
   console.log(feedsData);
   return (
-    <div className="max-w-3xl w-full mx-auto">
+    <div
+      className=" w-full mx-auto"
+      // style={{
+      //   backgroundImage:
+      //     'url("https://img.freepik.com/free-vector/hand-drawn-women-s-day-background_23-2151251162.jpg?t=st=1742452495~exp=1742456095~hmac=a3506f960446457517f3c7425c2cb5a7c575a5ec6433f6d3d531f828c043e240&w=996")', // Path to your background image
+      //   backgroundSize: "cover", // Ensures the image covers the entire div
+      //   backgroundPosition: "center", // Centers the image
+      // }}
+    >
       {feedsData?.length > 0 && (
         <ImageCarousel
           items={feedsData}

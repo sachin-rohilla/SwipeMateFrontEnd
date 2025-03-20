@@ -65,14 +65,14 @@ const Login = () => {
     return <Loader />;
   }
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 font-smooth">
+    <div className="flex items-center justify-center max-w-6xl mx-auto min-h-screen px-4 font-smooth">
       <div className="flex flex-col md:flex-row items-center w-full max-w-screen-xl">
         {/* Left Image Section */}
-        <div className="md:w-2/3 mb-8 md:mb-0">
+        <div className="md:w-1/2 mb-8 md:mb-0">
           <img
-            src="./main.png"
+            src="./love.png"
             alt="Login Illustration"
-            className="w-full h-full object-cover rounded-lg"
+            className="w-fit h-fit object-cover rounded-lg"
           />
         </div>
 

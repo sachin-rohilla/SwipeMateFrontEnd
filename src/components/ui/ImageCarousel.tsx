@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaRegThumbsDown } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 
-interface ICarouselItem {
-  _id: number;
-  firstName?: string;
-  age?: number;
-  location?: string;
-  gender?: string;
-  profilePicUrl: string;
-}
+// interface ICarouselItem {
+//   _id: number;
+//   firstName?: string;
+//   age?: number;
+//   location?: string;
+//   gender?: string;
+//   profilePicUrl: string;
+// }
 
 interface IImageCarouselProps {
-  items: ICarouselItem[];
+  items: any;
   handleInterest: (id: string) => void;
   handleIgnored: (id: string) => void;
-  fetchNextItems: () => Promise<ICarouselItem[]>;
   isLoading: boolean;
 }
 

@@ -19,7 +19,7 @@ interface Request {
 }
 
 interface AppContextType {
-  userData: User | null;
+  userData: any | null;
   setUserData: (userData: User | null) => void;
   feedsData: Feed[];
   setFeedsData: (feedsData: Feed[]) => void;

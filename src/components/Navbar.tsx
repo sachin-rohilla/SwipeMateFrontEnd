@@ -6,12 +6,12 @@ import ThemeToggleComp from "./ThemeToggleComp";
 
 const Navbar = () => {
   const { userData } = useAppContext();
-  const { logOutApi, isLoading } = useAuth();
+  const { logOutApi } = useAuth();
   const handleLogout = () => {
     logOutApi();
   };
   return (
-    <div className="navbar bg-base-100 shadow-sm px-8">
+    <div className="navbar bg-base-100 flex items-center shadow-sm px-8">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl ">
           SwipeMate
@@ -22,14 +22,9 @@ const Navbar = () => {
 
       {userData && (
         <div className="flex-none">
-          <input
-            type="checkbox"
-            value="synthwave"
-            className="toggle theme-controller"
-          />
           <Link
             to="/connections"
-            className="font-modern font-semibold hidden sm:block"
+            className="font-modern font-semibold hidden  sm:block"
           >
             Connections
           </Link>

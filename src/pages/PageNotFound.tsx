@@ -14,7 +14,7 @@ const PageNotFound = () => {
           to={"/"}
           title="Go back to home page"
           replace
-          className="group cursor-pointer slide-anime px-5 py-3 rounded-full w-[290px] mt-4 dark:bg-linkHover/80 bg-base-dark text-white dark:text-black flex justify-between items-center font-semibold "
+          className="group cursor-pointer slide-anime px-7 py-3 rounded-full w-[290px] mt-4 bg-base-dark   flex justify-between items-center font-semibold "
         >
           <House className="inline text-lg" />
           Go back to home page

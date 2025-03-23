@@ -13,6 +13,7 @@ function App() {
   const Connections = lazy(() => import("./pages/Connections"));
   const Requests = lazy(() => import("./pages/Requests"));
   const Profile = lazy(() => import("./pages/Profile"));
+  const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 
   return (
     <>
@@ -54,6 +55,7 @@ function App() {
 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
       </Suspense>

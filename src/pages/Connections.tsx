@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
 import useConnectionRequest from "../hooks/useConnectionRequest";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaHandshake, FaInfoCircle } from "react-icons/fa";
 import TiltedCover from "../components/ui/TitledCover";
 import Skeleton from "../components/Skeleton";
 
@@ -41,9 +41,11 @@ const Connections = () => {
 
   return (
     <div className="min-h-screen max-w-6xl w-full mx-auto p-8">
-      <h1 className="font-modern font-bold text-2xl text-center">
-        Connections
+      <h1 className="font-modern font-bold mx-auto text-2xl text-center w-fit flex items-center gap-x-4">
+        My Connections <FaHandshake size={30} />
       </h1>
+      <div className="divider"></div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {connections?.length > 0 &&
           connections.map((item) => (

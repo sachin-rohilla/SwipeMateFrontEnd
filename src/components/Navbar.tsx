@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100 flex items-center shadow-sm px-8">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl ">
+        <Link to="/" className="btn btn-ghost text-xl font-smooth ">
           SwipeMate
         </Link>
       </div>
@@ -24,18 +24,18 @@ const Navbar = () => {
         <div className="flex-none">
           <Link
             to="/connections"
-            className="font-modern font-semibold hidden  sm:block"
+            className="font-smooth font-semibold hidden  sm:block"
           >
             Connections
           </Link>
           <Link
             to="/requests"
-            className="font-modern font-semibold px-4 hidden sm:block"
+            className="font-smooth font-semibold px-4 hidden sm:block"
           >
             Requests
           </Link>
 
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end font-modern">
             <div
               tabIndex={0}
               role="button"
@@ -65,13 +65,13 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/connections"
-                  className="font-modern  block sm:hidden"
+                  className="font-smooth  block sm:hidden"
                 >
                   Connections
                 </Link>
               </li>
               <li>
-                <Link to="/requests" className="font-modern  block sm:hidden">
+                <Link to="/requests" className="font-smooth  block sm:hidden">
                   Requests
                 </Link>
               </li>

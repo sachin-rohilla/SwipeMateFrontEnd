@@ -41,8 +41,8 @@ const Connections = () => {
 
   return (
     <div className="min-h-screen max-w-6xl w-full mx-auto p-8">
-      <h1 className="font-modern font-bold mx-auto text-2xl text-center w-fit flex items-center gap-x-4">
-        My Connections <FaHandshake size={30} />
+      <h1 className="font-smooth font-bold mx-auto text-2xl text-center w-fit flex items-center gap-x-2">
+        Connections <FaHandshake size={30} />
       </h1>
       <div className="divider"></div>
 

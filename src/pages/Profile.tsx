@@ -64,7 +64,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center font-modern">
       {imageUrl && (
         <div className="flex flex-col justify-center items-center mt-8">
           <div className="avatar">
@@ -246,7 +246,7 @@ const Profile = () => {
                   Update Profile
                 </span>
                 <div className="flex gap-2 text-white z-10 items-center absolute left-0 top-0 h-full w-full justify-center translate-y-12 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 rounded-full">
-                  <span>Let’s Start This Journey 💖</span>
+                  <span>Ready, Set, Update! 🚀</span>
                 </div>
               </button>
             </div>

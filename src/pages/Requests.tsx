@@ -51,8 +51,8 @@ const Requests = () => {
 
   return (
     <div className="min-h-screen max-w-6xl w-full mx-auto p-8">
-      <h1 className="font-modern font-bold text-2xl text-center flex items-center gap-x-4 mx-auto w-fit">
-        My Requests <FaHands />
+      <h1 className="font-modern font-smooth font-bold text-2xl text-center flex items-center gap-x-2 mx-auto w-fit">
+        Requests <FaHands />
       </h1>
       <div className="divider"></div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

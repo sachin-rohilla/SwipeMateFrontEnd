@@ -113,7 +113,7 @@ export default function ImageCarousel({
             <div className="absolute  bg-black/5 backdrop-blur-sm flex items-center justify-center"></div>
           )}
 
-          <div className="absolute bottom-0 left-0 p-4 w-full bg-black/50 rounded-b-xl text-white font-modern capitalize">
+          <div className="absolute bottom-0 left-0 p-4 w-full bg-black/50 rounded-b-xl text-white font-smooth capitalize">
             <h1 className="text-xl font-bold">{visibleItem?.firstName}</h1>
             <p className="text-sm">{visibleItem?.age} years old</p>
             <p className="text-sm">{visibleItem?.location}</p>

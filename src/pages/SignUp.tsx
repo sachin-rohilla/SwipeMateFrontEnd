@@ -108,7 +108,7 @@ const SignUp = () => {
             <Form className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 w-full sm:w-96 md:w-1/2">
               <div className="text-center mb-4 col-span-full">
                 <h1 className="text-3xl font-semibold text-primary">Sign Up</h1>
-                <p className="mt-2 font-modern">
+                <p className="mt-2 font-smooth">
                   Ready to start something special? Let’s create your account 💖
                 </p>
               </div>

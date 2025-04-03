@@ -1,8 +1,9 @@
-import { Mail, Lock, User, Calendar, Trash } from "lucide-react";
+import { Mail, Lock, User, Calendar, Trash, Eye, EyeOff } from "lucide-react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Link, Navigate } from "react-router-dom";
 import { signUpValidationSchema } from "../utils/formSchema";
 import { useAppContext } from "../context/AppContext";
+
 import { CiUser } from "react-icons/ci";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -20,6 +21,13 @@ const SignUp = () => {
   const { userData } = useAppContext();
   const [imageUrl, setImageUrl] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
+  const toggleConfirmPasswordVisibility = () =>
+    setConfirmPasswordVisible(!confirmPasswordVisible);
 
   const { signUpApi, isLoading: isSignUpLoading } = useAuth();
   const handleUpload = () => {
@@ -168,11 +176,22 @@ const SignUp = () => {
                 <label className="input flex border border-base-300 items-center gap-2">
                   <Lock className="h-5 w-5 opacity-50" />
                   <Field
-                    type="password"
+                    type={passwordVisible ? "text" : "password"}
                     name="password"
                     placeholder="Password"
                     className="p-2 rounded w-full mt-1"
                   />
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="ml-2"
+                  >
+                    {passwordVisible ? (
+                      <EyeOff className="h-5 w-5 opacity-50" />
+                    ) : (
+                      <Eye className="h-5 w-5 opacity-50" />
+                    )}
+                  </button>
                 </label>
                 <ErrorMessage
                   name="password"
@@ -180,16 +199,28 @@ const SignUp = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
+
               {/* Confirm Password */}
               <div className="flex flex-col gap-2 col-span-full">
                 <label className="input flex border border-base-300 items-center gap-2">
                   <Lock className="h-5 w-5 opacity-50" />
                   <Field
-                    type="password"
+                    type={confirmPasswordVisible ? "text" : "password"}
                     name="confirmPassword"
                     placeholder="Confirm Password"
                     className="p-2 rounded w-full mt-1"
                   />
+                  <button
+                    type="button"
+                    onClick={toggleConfirmPasswordVisibility}
+                    className="ml-2"
+                  >
+                    {confirmPasswordVisible ? (
+                      <EyeOff className="h-5 w-5 opacity-50" />
+                    ) : (
+                      <Eye className="h-5 w-5 opacity-50" />
+                    )}
+                  </button>
                 </label>
                 <ErrorMessage
                   name="confirmPassword"
@@ -197,6 +228,7 @@ const SignUp = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
+
               {/* Age */}
               <div className="flex flex-col gap-2 col-span-full sm:col-span-1">
                 <label className="input flex border border-base-300 items-center gap-2">

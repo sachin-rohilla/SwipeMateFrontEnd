@@ -77,9 +77,12 @@ const Navbar = () => {
               </li>
 
               <li>
-                <button onClick={handleLogout}>
+                <button
+                  onClick={handleLogout}
+                  className="flex justify-between items-center w-full"
+                >
                   Logout
-                  <AiOutlineLogout size={15} />
+                  <AiOutlineLogout size={15} className="mr-2 font-bold" />
                 </button>
               </li>
             </ul>

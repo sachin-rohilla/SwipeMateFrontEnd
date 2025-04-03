@@ -49,7 +49,7 @@ const Connections = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {connections?.length > 0 &&
           connections.map((item) => (
-            <div key={item.id} className="w-full ">
+            <div key={item?._id} className="w-full ">
               <TiltedCover
                 image={{
                   alt: item?.firstName + " " + item?.lastName || "No Name",

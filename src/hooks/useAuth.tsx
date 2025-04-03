@@ -3,10 +3,13 @@ import { API_URL } from "../constants/constants";
 import toast from "react-hot-toast";
 import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import useProfile from "./useProfile";
 
 const useAuth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { setUserData } = useAppContext();
+  const { getProfile } = useProfile();
+
   const navigate = useNavigate();
   const loginApi = async (payload: any) => {
     try {
@@ -56,7 +59,8 @@ const useAuth = () => {
         throw new Error(` ${errorMessage}`);
       }
       toast.success(data?.message || " Sign Up Successfully");
-      navigate("/login");
+      // navigate("/login");
+      getProfile();
     } catch (error: any) {
       console.log("SignUp error:", error.message || "Something went wrong");
       toast.error(error?.message || "Something went wrong");

@@ -62,15 +62,24 @@ const Connections = () => {
                   <h2 className="text-xl font-semibold capitalize mb-2">
                     {item?.firstName || ""} {item?.lastName || ""}
                   </h2>
-                  <div className="text-gray-600 flex items-center mt-2">
-                    <FaInfoCircle className="mr-2 text-lg" />
-                    <p className="text-sm">
-                      {item?.about || "No about information available."}
+                  <div className="text-gray-600 flex items-center space-x-2 mt-2">
+                    <span role="img" aria-label="gender" className="text-lg">
+                      🧑
+                    </span>
+                    <span className="font-semibold">Gender:</span>
+                    <p className="text-sm ml-2">
+                      {item?.fromUserId?.about || "N/A"}
                     </p>
                   </div>
-                  <div className="text-gray-600 flex items-center mt-2">
-                    <FaInfoCircle className="mr-2 text-lg" />
-                    <p className="text-sm">{item?.gender || "Not specified"}</p>
+
+                  <div className="text-gray-600 flex items-center space-x-2 mt-2">
+                    <span role="img" aria-label="star" className="text-lg">
+                      🌟
+                    </span>
+                    <span className="font-semibold">About:</span>
+                    <p className="text-sm ml-2">
+                      {item?.fromUserId?.gender || "N/A"}
+                    </p>
                   </div>
                 </div>
               </TiltedCover>

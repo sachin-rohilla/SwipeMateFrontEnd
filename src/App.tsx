@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import { lazy, Suspense } from "react";
 import Layout from "./Layout/Layout";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import Loader from "./components/Loader";
+import "./App.css";
 
 function App() {
   const Home = lazy(() => import("./pages/Home"));

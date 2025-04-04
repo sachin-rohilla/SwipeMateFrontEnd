@@ -58,7 +58,7 @@ const Requests = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {receivedRequests?.length > 0 &&
           receivedRequests.map((item) => (
-            <div key={item.id} className="w-full relative">
+            <div key={item?._id} className="w-full relative">
               <TiltedCover
                 image={{
                   alt:
@@ -79,17 +79,23 @@ const Requests = () => {
                     {item?.fromUserId?.firstName || ""}{" "}
                     {item?.fromUserId?.lastName || ""}
                   </h2>
-                  <div className="text-gray-600 flex items-center mt-2">
-                    <FaInfoCircle className="mr-2 text-lg" />
-                    <p className="text-sm">
-                      {item?.fromUserId?.about ||
-                        "No about information available."}
+                  <div className="text-gray-600 flex items-center space-x-2 mt-2">
+                    <span role="img" aria-label="gender" className="text-lg">
+                      🧑
+                    </span>
+                    <span className="font-semibold">Gender:</span>
+                    <p className="text-sm ml-2">
+                      {item?.fromUserId?.about || "N/A"}
                     </p>
                   </div>
-                  <div className="text-gray-600 flex items-center mt-2">
-                    <FaInfoCircle className="mr-2 text-lg" />
-                    <p className="text-sm">
-                      {item?.fromUserId?.gender || "Not specified"}
+
+                  <div className="text-gray-600 flex items-center space-x-2 mt-2">
+                    <span role="img" aria-label="star" className="text-lg">
+                      🌟
+                    </span>
+                    <span className="font-semibold">About:</span>
+                    <p className="text-sm ml-2">
+                      {item?.fromUserId?.gender || "N/A"}
                     </p>
                   </div>
                 </div>
